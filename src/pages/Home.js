@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
   return (
@@ -11,7 +13,7 @@ const Home = () => {
         <Section>
           <h2>초급 수어 강의</h2>
           <p>수어의 기초를 배우고 싶으신 분들을 위한 강좌입니다.</p>
-          <Button>강의 보기</Button>
+          <Link to="/Study"><Button>강의 보기</Button></Link>
         </Section>
         <Section>
           <h2>중급 수어 강의</h2>
