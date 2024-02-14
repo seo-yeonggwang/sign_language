@@ -22,12 +22,9 @@ function Toolbar(props) {
   return (
     <div style={styles.container}>
       <Link to="/">
-        <span style={styles.box}>홈</span>
-      </Link>
-      <Link to="/intro">
         <span style={styles.box}>소개</span>
       </Link>
-      <Link to="/study">
+      <Link to="/study-main">
         <span style={styles.box}>학습하기</span>
       </Link>
       <Link to="/mypage">

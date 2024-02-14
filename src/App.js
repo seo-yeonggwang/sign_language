@@ -5,7 +5,6 @@ import Study from "./pages/Study";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login"
 import Header from "./Header";
-import Intro from './pages/Intro';
 import Mypage from './pages/Mypage';
 
 function App() {
@@ -15,8 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route exact path="/" element={<Home/>}></Route>
-          <Route exact path="/intro" element={<Intro/>}></Route>
-          <Route path="/study/*" element={<Study/>}></Route>
+          <Route path="/study-main/*" element={<Study/>}></Route>
           <Route exact path="/mypage" element={<Mypage/>}></Route>
           <Route path="/login/*" element={<Login/>}></Route>
           <Route path="*" element={<NotFound/>}></Route>
