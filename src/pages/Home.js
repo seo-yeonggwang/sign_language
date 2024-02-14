@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -35,7 +35,7 @@ export default Home;
 const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
-  max-width: 800px;
+  max-width: 1000px;
 `;
 
 const Header = styled.header`
@@ -45,13 +45,14 @@ const Header = styled.header`
 
 const Main = styled.main`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 `;
 
 const Section = styled.section`
   text-align: center;
-  margin-bottom: 40px;
+  margin-right: 40px;
+  margin-left: 40px;
 `;
 
 const Button = styled.button`
