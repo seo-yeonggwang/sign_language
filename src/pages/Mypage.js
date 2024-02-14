@@ -1,12 +1,5 @@
-const styles = {
-	block: {
-		display: "block",
-	},
-    text: {
-        display: "inline-block",
-        width: "70px",
-    }
-};
+import styled from 'styled-components';
+
 
 function Mypage(props){
     return (

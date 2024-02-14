@@ -18,7 +18,7 @@ function LoginButton(props) {
     return (
         <div style = {styles.container}>
             <span style={styles.box}>
-                <Link to="/login"> 로그인</Link>
+                <Link to="/login" style={{ textDecoration: "none"}}> 로그인</Link>
             </span>
         </div>
     )

@@ -30,7 +30,7 @@ function StudyMain() {
     </Container>
     
   )
-  }
+}
 
 export default StudyMain
 

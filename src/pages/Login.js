@@ -1,12 +1,4 @@
-const styles = {
-	block: {
-		display: "block",
-	},
-    text: {
-        display: "inline-block",
-        width: "70px",
-    }
-};
+import styled from 'styled-components';
 
 function Login(props){
     return (
@@ -14,12 +6,12 @@ function Login(props){
             <div>로그인 페이지</div>
             <form>
                 <div>
-                    <span style = {styles.text}>ID </span>
+                    <Label>ID </Label>
                     <input type="text"></input>
                 </div>
 
                 <div>
-                    <span style = {styles.text}>PSWD </span>
+                    <Label>PSWD </Label>
                     <input type="password"></input>
                 </div>
                 <button type="submit">로그인</button>
@@ -28,3 +20,8 @@ function Login(props){
     )
 }
 export default Login
+
+const Label = styled.label`
+    display: inline-block;
+    width: 70px;
+`;

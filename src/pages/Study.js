@@ -51,7 +51,7 @@ function Study() {
         <h1>학습 페이지</h1>
         <div style={{ width: '100vw', height: '100vh', padding: '3em' }}>
           {/* <video ref={videoRef} autoPlay style={Styles.Video} />
-          <Button color="warning" onClick={() => startOrStop()}>{playing ? 'Stop' : 'Start'} </Button> */}
+          <button color="warning" onClick={() => startOrStop()}>{playing ? 'Stop' : 'Start'} </button> */}
         </div >
 
     </div>
