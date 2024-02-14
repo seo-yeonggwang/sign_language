@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
 import Toolbar from "./Toolbar";
 import LoginButton from "./LoginButton";
+import Logo from "./images/Logo.png";
 
 function Header(props) {
     return (
         <div className="Header">
             <LoginButton/>
-            <h1>
                 <Link to="/">
-                    홈(헤더)
+                    <img src={Logo}/>
                 </Link>
-            </h1>
             <Toolbar/>
         </div>
     );
