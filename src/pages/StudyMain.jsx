@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-
 function StudyMain() {
+
   return (
     
     <Container>

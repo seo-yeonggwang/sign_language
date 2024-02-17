@@ -1,4 +1,6 @@
 import React, {useRef} from 'react';
+import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
 
 const getWebcam = (callback) => {
   try {
@@ -20,6 +22,12 @@ const Styles = {
 }
 
 function Study() {
+  const navigate = useNavigate();
+  const [cookies] = useCookies(['id']);
+  if (!cookies.id){ // 비회원이 페이지 접근시 홈으로
+      navigate('/');
+  }
+  // 동영상 띄우기(안됨)
   // const [playing, setPlaying] = React.useState(undefined);
 
   // const videoRef = React.useRef(null);

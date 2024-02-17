@@ -5,7 +5,7 @@ import styled from 'styled-components';
 function Toolbar(props) {
   const location = useLocation();
 
-  if (location.pathname === "/login") return null;
+  if (location.pathname === "/login" || location.pathname === "/register") return null;
 
   return (
     <Container>

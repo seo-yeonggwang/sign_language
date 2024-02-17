@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import Toolbar from "./Toolbar";
-import LoginButton from "./LoginButton";
+import User from "./User";
 import Logo from "./images/Logo.png";
 
 function Header(props) {
     return (
         <div className="Header">
-            <LoginButton/>
+            <User/>
                 <Link to="/">
                     <img src={Logo}/>
                 </Link>
