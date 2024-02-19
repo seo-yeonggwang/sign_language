@@ -8,27 +8,18 @@ function UserData(props){
     const [localStorageData, setLocalStorageData] = useState(null);
     
     useEffect(() => {
-        // 로컬 스토리지에서 모든 키를 가져오는 함수
+        // 로컬 스토리지의 모든 데이터
         const getAllLocalStorageKeys = () => {
-            const keys = [];
+            const data={};
             for (let i = 1; i < localStorage.length; i++) {
-                keys.push(localStorage.key(i));
+                const localKey = localStorage.key(i);
+                data[localKey] = localStorage.getItem(localKey);
             }
-            return keys;
-        };
-    
-        // 모든 로컬 스토리지 데이터를 가져오는 함수
-        const getAllLocalStorageData = () => {
-            const data = {};
-            const keys = getAllLocalStorageKeys();
-            keys.forEach(key => {
-                data[key] = localStorage.getItem(key);
-            });
             return data;
         };
     
-        // 컴포넌트가 마운트될 때 실행
-        setLocalStorageData(getAllLocalStorageData());
+        // 마운트 실행
+        setLocalStorageData(getAllLocalStorageKeys());
     }, []);
 
     return (
