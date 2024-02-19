@@ -14,17 +14,17 @@ function StudyMain() {
         <Section>
           <h2>초급 수어 강의</h2>
           <p>수어의 기초를 배우고 싶으신 분들을 위한 강좌입니다.</p>
-          <Link to="/Study"><Button>강의 보기</Button></Link>
+          <Link to="/study-select"><Button>강의 보기</Button></Link>
         </Section>
         <Section>
           <h2>중급 수어 강의</h2>
           <p>초급을 마스터한 분들을 위한 중급 강좌입니다.</p>
-          <Button>강의 보기</Button>
+          {/* <Button>강의 보기</Button> */}
         </Section>
         <Section>
           <h2>고급 수어 강의</h2>
           <p>수어에 더 깊게 파고들고 싶으신 분들을 위한 고급 강좌입니다.</p>
-          <Button>강의 보기</Button>
+          {/* <Button>강의 보기</Button> */}
         </Section>
       </Main>
     </Container>

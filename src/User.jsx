@@ -4,16 +4,6 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCookies } from 'react-cookie';
 
-// const styles = {
-// 	container: {
-// 		display: "flex",
-//         flexDirection: "row-reverse",
-// 	},
-//     box: {
-//         padding: "5px",
-//     },
-// };
-
 function LoginButton(props){
     const [cookies, setCookie, removeCookie] = useCookies(['id']);
 

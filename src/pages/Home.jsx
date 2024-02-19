@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 const Home = () => {
   return (
     <>
-    <h1>홈 페이지</h1>
+    <h1>홈(소개) 페이지</h1>
 
     </>
   );
