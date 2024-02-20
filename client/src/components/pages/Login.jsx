@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 const dummy = {id: "user", pswd: "1111"}; // 비밀번호가 매우 단순해 크롬으로 로그인 성공시 경고 메시지 출력됨
 
@@ -13,47 +15,57 @@ function Login(){
         navigate('/');
     }
 
-    let id = ""; 
-    let pswd = ""; 
+    const [id, setId] = useState("");
+    const [pswd, setPswd] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    // const [loading, setLoading] = useState(false);   // 로딩 시간이 길 경우 사용 가능
     
     const handleSubmit = async e => {
         e.preventDefault(); // 새로고침 방지
 
+        if (id==="" || pswd==="") {alert("아이디와 비밀번호를 입력해주세요."); return;}
+
         if (id===dummy.id && pswd===dummy.pswd){
-            alert("관리자 계정 로그인 성공");
+            alert("관리자 계정으로 로그인 했습니다.");
             setCookie('id', "user")
             navigate('/'); // 홈으로 이동
             return;
         }
 
-        // 로컬 스토리지 이용한 회원가입 데이터로 로그인
-        const userDataString = localStorage.getItem(id);
+        const url = '/api/login';
+        await axios.post(url, {id: id, pswd:pswd})
+        .then(res=>{
+            if(res.data.id){
+                setCookie('id', id);
+                navigate('/'); 
+            }else{
+                alert("아이디와 비밀번호를 확인해주세요.");
+            }
+        })
+        .catch(err=>console.error('Error: ', err));
+        
 
-        if (!userDataString) {
-            alert("존재하지 않는 ID입니다.");
-            return;
-        }
-        // userDataString ---파싱---> js 객체
-        const userData = JSON.parse(userDataString);
-
-        if (pswd === userData.pswd){ // 로그인 성공
-            // setLoading(true); // 로딩
-            // await new Promise(r => setTimeout(r, 1000)); // r: resolve, r은 임의적 이름 (로딩 시간)
-            setCookie('id', id)
-            navigate('/'); // 홈으로 이동
-            // setLoading(false);
-        }
-        else{
-            alert("비밀번호를 확인해주세요.");
-        }
     };
-  
+    // // 로컬 스토리지 이용한 회원가입 데이터로 로그인
+    // const userDataString = localStorage.getItem(id);
 
-    // if (loading) {
-    //   return <h1>Logging in...</h1>;
-    // }
+        // if (!userDataString) {
+        //     alert("존재하지 않는 ID입니다.");
+        //     return;
+        // }
+        // // userDataString ---파싱---> js 객체
+        // const userData = JSON.parse(userDataString);
+
+        // if (pswd === userData.pswd){ // 로그인 성공
+        //     setCookie('id', id)
+        //     navigate('/'); // 홈으로 이동
+        // }
+        // else{
+        //     alert("비밀번호를 확인해주세요.");
+        // }
+
+
+    
+  
     return (
         <div>
             <div>로그인 페이지</div>
@@ -63,7 +75,7 @@ function Login(){
                     <input 
                         type="text"
                         placeholder="ID"
-                        onChange={(e) => id = e.target.value}
+                        onChange={(e) => setId(e.target.value)}
                     ></input>
                 </div>
 
@@ -72,10 +84,8 @@ function Login(){
                     <input
                         type={showPassword ? "text" : "password"}
                         placeholder="PSWD"
-                        onChange={(e) => pswd = e.target.value}
+                        onChange={(e) => setPswd(e.target.value)}
                     ></input>
-                </div>
-                <div>
                     <label>
                         <input
                             type="checkbox"
@@ -85,6 +95,8 @@ function Login(){
                         비밀번호 표시
                     </label>
                 </div>
+
+
                 <button type="submit">로그인</button>
                 <Link to="/register">
                     <button>회원가입</button>

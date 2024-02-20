@@ -37,7 +37,7 @@ function LoginButton(props){
     }
 }
 
-function User(props) {
+function User(props) { // 사용자 이름, 로그인/로그아웃 버튼 표시 바
     const location = useLocation();
     if (location.pathname === "/login" || location.pathname === "/register") return null;
     return (
