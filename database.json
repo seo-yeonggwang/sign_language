@@ -1,0 +1,7 @@
+{
+    "host": "web.c5ywqacq67g4.ap-southeast-2.rds.amazonaws.com",
+    "user": "user",
+    "password": "userPassword",
+    "port": "3306",
+    "database": "userDatabase"
+}

@@ -9,6 +9,7 @@ function UserInfo(props){
         <div key = {props.id}>
             <p>id: {props.id}</p>
             <p>pswd: {props.pswd}</p>
+            <p>이름: {props.name}</p>
         </div>
     )
 }
@@ -36,7 +37,7 @@ function UserData(props){
         <div>
             <h3>User Data</h3>
             {localStorageData && localStorageData.map(key => (
-                <UserInfo id={key.id} pswd={key.pswd}/>
+                <UserInfo id={key.id} pswd={key.pswd} name={key.name}/>
             ))}
         </div>
     )

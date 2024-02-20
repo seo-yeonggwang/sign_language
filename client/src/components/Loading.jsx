@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import React, {useState, useEffect} from 'react'
 
-function Progress() { // 로딩 아이콘
+function Loading() { // 로딩 아이콘
     const [completed, setCompleted] = useState(0);
 
     useEffect(()=>{
@@ -16,4 +16,4 @@ function Progress() { // 로딩 아이콘
     )
 }
 
-export default Progress
+export default Loading

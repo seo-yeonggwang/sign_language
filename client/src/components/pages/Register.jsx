@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom';
 function Register(){
     const navigate = useNavigate();
     const [cookies] = useCookies(['id']);
+    const [showPassword, setShowPassword] = useState(false);
     if (cookies.id){ // 로그인 후 페이지 접근시 홈으로
         navigate('/');
     }
 
     let id = ""; 
     let pswd = ""; 
-    const [showPassword, setShowPassword] = useState(false);
+    let name = "";
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -21,7 +22,8 @@ function Register(){
         else if (!!localStorage.getItem(id)) alert("이미 존재하는 아이디 입니다.");
         else{
             const userData = {
-                pswd: pswd
+                pswd: pswd,
+                name: name
             };
             localStorage.setItem(id, JSON.stringify(userData));
             alert('회원가입이 완료되었습니다.');
@@ -48,17 +50,27 @@ function Register(){
                         placeholder="PSWD"
                         onChange={(e) => pswd = e.target.value}
                     ></input>
-                </div>
-                <div>
-                    <label>
+    `                <label>
                         <input
                             type="checkbox"
                             checked={showPassword}
                             onChange={() => setShowPassword(!showPassword)}
                         />
                         비밀번호 표시
-                    </label>
+                    </label>`
                 </div>
+
+                <div>
+                    <Label>이름 </Label>
+                    <input
+                        type="text"
+                        placeholder="이름"
+                        onChange={(e) => name = e.target.value}
+                    ></input>
+                </div>
+
+                
+                
                 <button type="submit">회원가입</button>
             </form>
         </div>
