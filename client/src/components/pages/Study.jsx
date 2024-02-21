@@ -3,7 +3,6 @@ import Webcam from '../Webcam';
 import Video from '../Video';
 import styled from 'styled-components';
 function Study() {
-
   return (
     <>
       <h1>학습 페이지</h1>

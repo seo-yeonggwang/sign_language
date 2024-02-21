@@ -39,7 +39,19 @@ app.get('/api/getUserData', (req,res)=>{
             res.send(rows);
         }
     );
-})
+});
+app.get('/api/getClassData', (req,res)=>{
+    connection.query(
+        "SELECT * FROM CLASS",
+        (err, rows, fields) => {
+            if (err) {
+                console.log('Error executing query:', err);
+                return;
+            }
+            res.send(rows);
+        }
+    );
+});
 
 app.post('/api/checkId', (req, res)=>{
     const { id } = req.body;
@@ -53,7 +65,7 @@ app.post('/api/checkId', (req, res)=>{
     });
 });
 
-app.delete('/api/secession/:id', (req, res) => {
+app.delete('/api/secession/:id', (req, res) => { // 탈퇴
     const id = req.params.id; // 요청 URL에서 ID 가져옴
     const sql = "DELETE FROM USER WHERE id = ?";
     connection.query(sql, [id], (err, rows)=>{
@@ -78,8 +90,16 @@ app.post('/api/postUserData', (req, res)=>{
         (err, rows, fields) =>{
             res.send(rows);
         }
-        );
+    );
+});
+app.post('/api/postClassData', (req, res)=>{
+    sql = 'INSERT INTO CLASS(difficulty, URL) VALUES(?, ?)';
+    const { difficulty, URL } = req.body;
+    const params = [difficulty, URL];
+    connection.query(sql, params, (err, rows, fields) =>{
+        res.send(rows);
     });
+});
     
 app.post('/api/login', (req, res)=>{
     const id = req.body.id;

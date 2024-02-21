@@ -14,7 +14,7 @@ function Toolbar(props) {
             <Menu>소개</Menu>
         </Link>
 
-        <Link to="/study-main" style={{ textDecoration: "none"}}>
+        <Link to="/select-difficulty" style={{ textDecoration: "none"}}>
             <Menu>학습하기</Menu>
         </Link>
 

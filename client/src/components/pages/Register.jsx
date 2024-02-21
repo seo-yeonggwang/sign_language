@@ -4,7 +4,6 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 function Register(){
     const navigate = useNavigate();
     const [cookies] = useCookies(['id']);
@@ -17,7 +16,6 @@ function Register(){
     const [id, setId] = useState("");
     const [pswd, setPswd] = useState("");
     const [name, setName] = useState("");
-    // let file = null;  //이미지 전송 필요할 경우
 
     const handleSubmit = async e => {
         e.preventDefault();

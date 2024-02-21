@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Progress from './Loading';
+import Loading from './Loading';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import { TableBody } from '@mui/material';
 
+// DB USER TABLE 쉽게 확인하는 용도의 임시 컴포넌트
 function JsonTest(props){
     return(
       <Paper>
@@ -37,11 +38,11 @@ function JsonTest(props){
 }
 
 const UserData = () => {
-  const [data, setData] = useState(null); // 빈 배열이 아닌 null로 해야 Progress 컴포넌트 렌더링
+  const [data, setData] = useState(null); // 빈 배열이 아닌 null로 해야 Loading 컴포넌트 렌더링
 
   useEffect(() => {
     const fetchData = async () => {
-      setTimeout(async () => { // Progress 컴포넌트 확인용 딜레이
+      setTimeout(async () => { // Loagind 컴포넌트 확인용 딜레이
       fetch('/api/getUserData')  //await?
       .then(res => {
         if (!res.ok) {
@@ -59,7 +60,7 @@ const UserData = () => {
   return (
     <>
       <h3>USER DB 확인</h3>
-      {data ? <JsonTest data = {data}></JsonTest> : <Progress/>}
+      {data ? <JsonTest data = {data}></JsonTest> : <Loading/>}
     </>
   );
 };
