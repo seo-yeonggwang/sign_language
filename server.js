@@ -36,7 +36,7 @@ app.get('/api/getUserData', (req,res)=>{ // UserData.jsx   USER DB 확인용 컴
                 console.log('Error executing query:', err);
                 return;
             }
-            res.send(rows);
+            res.json(rows);
         }
     );
 });
@@ -48,7 +48,7 @@ app.get('/api/getClassData', (req,res)=>{ // ClassData.jsx  CLASS DB 확인용 �
                 console.log('Error executing query:', err);
                 return;
             }
-            res.send(rows);
+            res.json(rows);
         }
     );
 });
@@ -61,7 +61,7 @@ app.get('/api/getChapter', (req,res)=>{  // SelectChapter.jsx CLASS difficulty �
                 console.log('Error executing query:', err);
                 return;
             }
-            res.send(rows);
+            res.json(rows);
         }
     );
 });
@@ -73,7 +73,7 @@ app.get('/api/getURL', (req,res)=>{  // Study.jsx 학습 영상 유튜브 URL id
                 console.log('Error executing query:', err);
                 return;
             }
-            res.send(rows[0]);
+            res.json(rows[0]);
         }
     );
 });
@@ -113,7 +113,7 @@ app.post('/api/postUserData', (req, res)=>{  // Register.jsx  회원가입 요�
     let params = [id,pswd,name];
     connection.query(sql,params,
         (err, rows, fields) =>{
-            res.send(rows);
+            res.json(rows);
         }
     );
 });
@@ -122,7 +122,7 @@ app.post('/api/postClassData', (req, res)=>{  // ClassData.jsx 임시 컴포넌�
     const { difficulty, title, detail, URL } = req.body;
     const params = [difficulty, title, detail, URL];
     connection.query(sql, params, (err, rows, fields) =>{
-        res.send(rows);
+        res.json(rows);
     });
 });
     
