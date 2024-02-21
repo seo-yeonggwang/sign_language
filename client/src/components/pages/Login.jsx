@@ -5,9 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
-const dummy = {id: "user", pswd: "1111"}; // 비밀번호가 매우 단순해 크롬으로 로그인 성공시 경고 메시지 출력됨
-
 function Login(){
     const navigate = useNavigate(); // history: 구버전
     const [cookies, setCookie] = useCookies(['id']);
@@ -23,13 +20,6 @@ function Login(){
         e.preventDefault(); // 새로고침 방지
 
         if (id==="" || pswd==="") {alert("아이디와 비밀번호를 입력해주세요."); return;}
-
-        if (id===dummy.id && pswd===dummy.pswd){
-            alert("관리자 계정으로 로그인 했습니다.");
-            setCookie('id', "user")
-            navigate('/'); // 홈으로 이동
-            return;
-        }
 
         const url = '/api/login';
         await axios.post(url, {id: id, pswd:pswd})
