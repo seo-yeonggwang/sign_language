@@ -29,7 +29,7 @@ function App() {
           <Header />
           <Routes>
             <Route exact path="/" element={<Home/>}></Route>
-            <Route path="/study/" element={<PrivateRoute authenticated={cookies.id} component={<Study />} />}></Route>
+            <Route path="/study/*" element={<PrivateRoute authenticated={cookies.id} component={<Study />} />}></Route>
             <Route path="/select-difficulty/" element={<PrivateRoute authenticated={cookies.id} component={<SelectDifficulty />} />}></Route>
             <Route path="/select-chapter/*" element={<PrivateRoute authenticated={cookies.id} component={<SelectChapter />} />}></Route>
             <Route path="/mypage/" element={<PrivateRoute authenticated={cookies.id} component={<Mypage />} />}></Route>

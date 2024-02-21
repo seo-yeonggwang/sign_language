@@ -13,6 +13,8 @@ const ClassData = () => {
   
   let difficulty = ""; // CLASS 데이터 추가 시 사용
   let URL = ""; 
+  let title = ""; 
+  let detail = ""; 
 
   const handleSubmit = async e => { // CLASS 데이터 추가 시 사용
     e.preventDefault();
@@ -20,27 +22,29 @@ const ClassData = () => {
     
     await axios.post('/api/postClassData', {
       difficulty: difficulty,
+      title: title,
+      detail: detail,
       URL: URL
     })
     .then(res=>{
-      window.location.reload(); // 새로고침
+      fetchData(); // 컴포넌트 새로고침
     })
     .catch(err=> console.error('Error: ', err));
   };
 
+  const fetchData = async () => {
+    await fetch('/api/getClassData')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response error');
+      }
+      return res.json();
+    })
+    .then(body=>setData(body))
+    .catch(err=>console.error('Error fetching data:', err));
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetch('/api/getClassData')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Network response error');
-        }
-        return res.json();
-      })
-      .then(body=>setData(body))
-      .catch(err=>console.error('Error fetching data:', err));
-    };
     fetchData();
   }, []);
   
@@ -55,7 +59,9 @@ const ClassData = () => {
             <TableHead>
               <TableRow>
                 <TableCell>primary key</TableCell>
-                <TableCell>난이도</TableCell>
+                <TableCell>난이도(1~3:초급~고급)</TableCell>
+                <TableCell>주제</TableCell>
+                <TableCell>내용</TableCell>
                 <TableCell>URL(학습 자료 영상 유튜브 URL id)</TableCell>
               </TableRow>
             </TableHead>
@@ -65,6 +71,8 @@ const ClassData = () => {
                 <TableRow id = {d.id}>
                   <TableCell>{d.id}</TableCell>
                   <TableCell>{d.difficulty}</TableCell>
+                  <TableCell>{d.title}</TableCell>
+                  <TableCell>{d.detail}</TableCell>
                   <TableCell>{d.URL}</TableCell>
                 </TableRow>
               ))}
@@ -78,6 +86,20 @@ const ClassData = () => {
                     type="text"
                     placeholder='난이도'
                     onChange={(e) => difficulty=(e.target.value)}
+                  ></input>
+                </TableCell>
+                <TableCell>
+                  <input 
+                    type="text"
+                    placeholder='주제'
+                    onChange={(e) => title=(e.target.value)}
+                  ></input>
+                </TableCell>
+                <TableCell>
+                  <input 
+                    type="text"
+                    placeholder='내용'
+                    onChange={(e) => detail=(e.target.value)}
                   ></input>
                 </TableCell>
                 <TableCell>

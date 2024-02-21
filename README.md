@@ -46,8 +46,7 @@ CREATE TABLE LEARNING (
 	FOREIGN KEY (class_id) REFERENCES CLASS(id) ON DELETE CASCADE
 ) DEFAULT CHARACTER SET UTF8MB3 COLLATE UTF8_GENERAL_CI;
 
-INSERT INTO USER VALUES ('123','123','123');
-INSERT INTO CLASS (difficulty, URL) VALUES ('초급', 'pQUWOFbL10g');
+INSERT INTO CLASS (difficulty, URL, title, detail) VALUES ('1', 'pQUWOFbL10g', "수어 기초1", "수어 기초 테스트 영상입니다.");
 
 SELECT * FROM USER;
 
@@ -55,3 +54,13 @@ SELECT * FROM USER;
 # USER TABLE 구조 변경
 : server.js -> postUserData 수정
 : UserData.js 수정
+
+
+
+# etc
+
+현재 버전은 홈 화면에서 강의 목록을 유튜브 URL 뒤의 id를 이용해서 임의로 추가 가능
+
+추가한 강의는 로그인 후, 학습하기 페이지로 이동해서 조회 가능
+
+유튜브 연결이 되었다가 안되었다가 하는 상태

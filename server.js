@@ -28,7 +28,7 @@ connection.connect((err) => {
     console.log("connection seccess");
 });
 
-app.get('/api/getUserData', (req,res)=>{
+app.get('/api/getUserData', (req,res)=>{ // UserData.jsx   USER DB 확인용 컴포넌트의 요청
     connection.query(
         "SELECT * FROM USER",
         (err, rows, fields) => {
@@ -40,7 +40,7 @@ app.get('/api/getUserData', (req,res)=>{
         }
     );
 });
-app.get('/api/getClassData', (req,res)=>{
+app.get('/api/getClassData', (req,res)=>{ // ClassData.jsx  CLASS DB 확인용 컴포넌트의 요청
     connection.query(
         "SELECT * FROM CLASS",
         (err, rows, fields) => {
@@ -52,8 +52,33 @@ app.get('/api/getClassData', (req,res)=>{
         }
     );
 });
+app.get('/api/getChapter', (req,res)=>{  // SelectChapter.jsx CLASS difficulty 데이터 요청
+    // console.log(req.query.difficulty);
+    connection.query(
+        "SELECT * FROM CLASS WHERE difficulty = ?", [req.query.difficulty],
+        (err, rows, fields) => {
+            if (err) {
+                console.log('Error executing query:', err);
+                return;
+            }
+            res.send(rows);
+        }
+    );
+});
+app.get('/api/getURL', (req,res)=>{  // Study.jsx 학습 영상 유튜브 URL id 요청
+    connection.query(
+        "SELECT URL FROM CLASS WHERE id = ?", [req.query.class_id],
+        (err, rows, fields) => {
+            if (err) {
+                console.log('Error executing query:', err);
+                return;
+            }
+            res.send(rows[0]);
+        }
+    );
+});
 
-app.post('/api/checkId', (req, res)=>{
+app.post('/api/checkId', (req, res)=>{  // Register.jsx  아이디 중복 검사 요청
     const { id } = req.body;
     const sql = "SELECT COUNT(*) AS user_count FROM USER WHERE id = ?";
     connection.query(sql, [id], (err, rows)=>{
@@ -65,7 +90,7 @@ app.post('/api/checkId', (req, res)=>{
     });
 });
 
-app.delete('/api/secession/:id', (req, res) => { // 탈퇴
+app.delete('/api/secession/:id', (req, res) => { // Mypage.jsx 회원 탈퇴 요청
     const id = req.params.id; // 요청 URL에서 ID 가져옴
     const sql = "DELETE FROM USER WHERE id = ?";
     connection.query(sql, [id], (err, rows)=>{
@@ -81,7 +106,7 @@ function hash(password) { // 암호화
     return crypto.createHash('sha512').update(password).digest('hex');
 }
 
-app.post('/api/postUserData', (req, res)=>{
+app.post('/api/postUserData', (req, res)=>{  // Register.jsx  회원가입 요청
     let { id, pswd, name } = req.body;
     sql = 'INSERT INTO USER VALUES(?, ?, ?)';
     pswd = hash(req.body.pswd); // 암호화
@@ -92,16 +117,16 @@ app.post('/api/postUserData', (req, res)=>{
         }
     );
 });
-app.post('/api/postClassData', (req, res)=>{
-    sql = 'INSERT INTO CLASS(difficulty, URL) VALUES(?, ?)';
-    const { difficulty, URL } = req.body;
-    const params = [difficulty, URL];
+app.post('/api/postClassData', (req, res)=>{  // ClassData.jsx 임시 컴포넌트의 튜플 추가 요청
+    sql = 'INSERT INTO CLASS(difficulty, title, detail, URL) VALUES(?, ?, ?, ?)';
+    const { difficulty, title, detail, URL } = req.body;
+    const params = [difficulty, title, detail, URL];
     connection.query(sql, params, (err, rows, fields) =>{
         res.send(rows);
     });
 });
     
-app.post('/api/login', (req, res)=>{
+app.post('/api/login', (req, res)=>{ // Login.jsx 로그인 시도 결과 요청
     const id = req.body.id;
     const pswd = hash(req.body.pswd); // 암호화
     const sql = "SELECT id FROM USER WHERE id = ? AND pswd = ?";
