@@ -33,7 +33,7 @@ function SelectDifficulty() {
         difficulty = "2">
         </LearningContentCard>
         <LearningContentCard
-        title = "중급 수어 강의"
+        title = "고급 수어 강의"
         description="수어에 더 깊게 파고들고 싶으신 분들을 위한 고급 강좌입니다."
         difficulty = "3">
         </LearningContentCard>

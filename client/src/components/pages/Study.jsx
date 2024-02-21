@@ -4,6 +4,7 @@ import Video from '../Video';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../Loading';
 
 function Study() {
   const [urlId, setUrlId] = useState(null);
@@ -22,7 +23,7 @@ function Study() {
       <h1>학습 페이지</h1>
       {urlId}
       <Container>
-        <Video videoId={urlId} />
+        {urlId ? <Video videoId={urlId} /> : <Loading></Loading>}
         <Webcam/>
       </Container>
     </>

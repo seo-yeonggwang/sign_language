@@ -20,12 +20,6 @@ function Mypage(props){
             .catch(err=>console.error('Error: ', err));
         }
     };
-
-    if (cookie.id==="user"){ // 관리자: 회원 목록 확인
-        return (
-            <UserData/>
-        )
-    }
     
     return (
         <>
