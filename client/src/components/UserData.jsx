@@ -60,7 +60,7 @@ const UserData = () => {
   return (
     <>
       <h3>USER DB 확인</h3>
-      {data ? <JsonTest data = {data}></JsonTest> : <Loading/>}
+      {data ? <JsonTest data = {data}/> : <Loading/>}
     </>
   );
 };

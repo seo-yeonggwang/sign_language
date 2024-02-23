@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserData from '../UserData';
 import ClassData from '../ClassData';
-import ButtonBaseDemo from '../ButtonBaseDemo';
-import styled from 'styled-components';
 
 const Home = () => {
   return (

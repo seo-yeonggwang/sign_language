@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import UserData from '../UserData';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
 import axios from 'axios';
 
 function Mypage(props){
+    const [userData, setUserData] = useState(null);
     const [cookie, setCookie, removeCookie] = useCookies(['id']);
     const navigate = useNavigate();
 
@@ -19,11 +20,29 @@ function Mypage(props){
             })
             .catch(err=>console.error('Error: ', err));
         }
+
     };
+    useEffect(()=>{
+        const getUserData = async ()=>{
+          await axios.get(`/api/getUserData/1/?id=${cookie.id}`)
+          .then(res=> setUserData(res.data))
+          .catch(err=>console.error("Error: ", err));
+        };
+        getUserData(); 
+    }, []);
     
     return (
         <>
             <h1>마이페이지</h1>
+
+            {userData ? 
+                <>
+                <h4>id: {userData.id}</h4>
+                <h4>pswd: {userData.pswd}</h4>
+                <h4>이름: {userData.name}</h4>  
+                </>
+            : <Loading/>}
+            
             <button onClick={secession}>회원 탈퇴</button>
         </>
     )
