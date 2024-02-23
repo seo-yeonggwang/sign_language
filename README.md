@@ -1,10 +1,9 @@
 # 실행 방법
 
+npm install
 npm install -g yarn
 
 yarn dev
-
-실행 안된다면 리액트/노드js/Express 등 설치 확인
 
 # 리액트 css 디자인: Material-UI
 
@@ -31,7 +30,7 @@ CREATE TABLE USER (
 
 CREATE TABLE CLASS (
 	id INT AUTO_INCREMENT PRIMARY KEY ,
-	difficulty ENUM('1', '2',' 3') NOT null,
+	level ENUM('1', '2',' 3') NOT null,
 	title VARCHAR(128) ,
 	detail VARCHAR(256) , 
 	URL VARCHAR(128) NOT null
@@ -46,7 +45,7 @@ CREATE TABLE LEARNING (
 	FOREIGN KEY (class_id) REFERENCES CLASS(id) ON DELETE CASCADE
 ) DEFAULT CHARACTER SET UTF8MB3 COLLATE UTF8_GENERAL_CI;
 
-INSERT INTO CLASS (difficulty, URL, title, detail) VALUES ('1', 'pQUWOFbL10g', "수어 기초1", "수어 기초 테스트 영상입니다.");
+INSERT INTO CLASS (level, URL, title, detail) VALUES ('1', 'pQUWOFbL10g', "수어 기초1", "수어 기초 테스트 영상입니다.");
 
 SELECT * FROM USER;
 

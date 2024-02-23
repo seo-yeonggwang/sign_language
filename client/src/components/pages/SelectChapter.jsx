@@ -13,11 +13,11 @@ import axios from 'axios';
 function SelectChapter() {
   const [chapters, setChapters] = useState(null);
   const location = useLocation();
-  const d_id = location.pathname.split("/")[2]; // 1 || 2 || 3
+  const l_id = location.pathname.split("/")[2]; // 1 || 2 || 3
   
   useEffect(()=>{
     const getChapter = async ()=>{
-      await axios.get(`/api/getChapter/?difficulty=${d_id}`)
+      await axios.get(`/api/getChapter/?level=${l_id}`)
       .then(res=> setChapters(res.data))
       .catch(err=>console.error("Error: ", err));
     };

@@ -52,10 +52,10 @@ app.get('/api/getClassData', (req,res)=>{ // ClassData.jsx  CLASS DB 확인용 �
         }
     );
 });
-app.get('/api/getChapter', (req,res)=>{  // SelectChapter.jsx CLASS difficulty 데이터 요청
-    // console.log(req.query.difficulty);
+app.get('/api/getChapter', (req,res)=>{  // SelectChapter.jsx CLASS level 데이터 요청
+    // console.log(req.query.level);
     connection.query(
-        "SELECT * FROM CLASS WHERE difficulty = ?", [req.query.difficulty],
+        "SELECT * FROM CLASS WHERE level = ?", [req.query.level],
         (err, rows, fields) => {
             if (err) {
                 console.log('Error executing query:', err);
@@ -118,9 +118,9 @@ app.post('/api/postUserData', (req, res)=>{  // Register.jsx  회원가입 요�
     );
 });
 app.post('/api/postClassData', (req, res)=>{  // ClassData.jsx 임시 컴포넌트의 튜플 추가 요청
-    sql = 'INSERT INTO CLASS(difficulty, title, detail, URL) VALUES(?, ?, ?, ?)';
-    const { difficulty, title, detail, URL } = req.body;
-    const params = [difficulty, title, detail, URL];
+    sql = 'INSERT INTO CLASS(level, title, detail, URL) VALUES(?, ?, ?, ?)';
+    const { level, title, detail, URL } = req.body;
+    const params = [level, title, detail, URL];
     connection.query(sql, params, (err, rows, fields) =>{
         res.json(rows);
     });
