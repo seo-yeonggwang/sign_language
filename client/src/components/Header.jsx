@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import styled from 'styled-components';
 import Logo from '../images/Logo.png';
-import { mainColor, basicColor} from './theme';
+import { mainColor, basicColor} from '../theme';
 
 function LoginButton(props){
     const [cookies, setCookie, removeCookie] = useCookies(['id']);

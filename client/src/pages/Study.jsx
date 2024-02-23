@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Webcam from '../Webcam';
-import Video from '../Video';
+import Webcam from '../components/Webcam';
+import Video from '../components/Video';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import Loading from '../Loading';
+import Loading from '../components/Loading';
 
 function Study() {
   const [urlId, setUrlId] = useState(null);

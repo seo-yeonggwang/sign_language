@@ -6,7 +6,7 @@ import Table from '@mui/material/Table';
 import { TableBody } from '@mui/material';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import Loading from '../Loading';
+import Loading from '../components/Loading';
 import axios from 'axios';
 
 

@@ -6,7 +6,7 @@ import Study from "./pages/Study";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Header from "./Header";
+import Header from "./components/Header";
 import Mypage from "./pages/Mypage";
 import Search from './pages/Search';
 import { useCookies } from 'react-cookie';

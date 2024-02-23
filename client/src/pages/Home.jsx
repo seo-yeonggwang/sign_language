@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import UserData from '../UserData';
-import ClassData from '../ClassData';
+import UserData from '../components/UserData';
+import ClassData from '../components/ClassData';
 
 const Home = () => {
   return (

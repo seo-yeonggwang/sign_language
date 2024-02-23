@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../Loading';
+import Loading from '../components/Loading';
 import axios from 'axios';
 
 function Mypage(props){
