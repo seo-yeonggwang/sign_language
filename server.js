@@ -36,7 +36,20 @@ app.get('/api/getUserData', (req,res)=>{ // UserData.jsx   USER DB 확인용 컴
                 console.log('Error executing query:', err);
                 return;
             }
-            res.json(rows);
+            res.send(rows);
+        }
+    );
+});
+app.get('/api/getUserData/1', (req,res)=>{ // Mypage.jsx   USER 개인정보 요청
+    const query = 'SELECT * FROM USER' + ` WHERE id = "${req.query.id}"`;
+    connection.query(
+        query,
+        (err, rows, fields) => {
+            if (err) {
+                console.log('Error executing query:', err);
+                return;
+            }
+            res.send(rows[0]);
         }
     );
 });
@@ -48,20 +61,20 @@ app.get('/api/getClassData', (req,res)=>{ // ClassData.jsx  CLASS DB 확인용 �
                 console.log('Error executing query:', err);
                 return;
             }
-            res.json(rows);
+            res.send(rows);
         }
     );
 });
-app.get('/api/getChapter', (req,res)=>{  // SelectChapter.jsx CLASS difficulty 데이터 요청
-    // console.log(req.query.difficulty);
+app.get('/api/getChapter', (req,res)=>{  // SelectChapter.jsx CLASS level 데이터 요청
+    // console.log(req.query.level);
     connection.query(
-        "SELECT * FROM CLASS WHERE difficulty = ?", [req.query.difficulty],
+        "SELECT * FROM CLASS WHERE level = ?", [req.query.level],
         (err, rows, fields) => {
             if (err) {
                 console.log('Error executing query:', err);
                 return;
             }
-            res.json(rows);
+            res.send(rows);
         }
     );
 });
@@ -73,7 +86,7 @@ app.get('/api/getURL', (req,res)=>{  // Study.jsx 학습 영상 유튜브 URL id
                 console.log('Error executing query:', err);
                 return;
             }
-            res.json(rows[0]);
+            res.send(rows[0]);
         }
     );
 });
@@ -86,7 +99,7 @@ app.post('/api/checkId', (req, res)=>{  // Register.jsx  아이디 중복 검사
             console.error('Error: ', err);
             return;
         }
-        res.json({ user_count: rows[0].user_count });
+        res.send({ user_count: rows[0].user_count });
     });
 });
 
@@ -98,7 +111,7 @@ app.delete('/api/secession/:id', (req, res) => { // Mypage.jsx 회원 탈퇴 요
             console.error('Error: ', err);
             return;
         }
-        res.status(200).json({ message: `${id} 회원의 탈퇴가 완료되었습니다.` });
+        res.status(200).send({ message: `${id} 회원의 탈퇴가 완료되었습니다.` });
     });
 });
 
@@ -113,16 +126,16 @@ app.post('/api/postUserData', (req, res)=>{  // Register.jsx  회원가입 요�
     let params = [id,pswd,name];
     connection.query(sql,params,
         (err, rows, fields) =>{
-            res.json(rows);
+            res.send(rows);
         }
     );
 });
 app.post('/api/postClassData', (req, res)=>{  // ClassData.jsx 임시 컴포넌트의 튜플 추가 요청
-    sql = 'INSERT INTO CLASS(difficulty, title, detail, URL) VALUES(?, ?, ?, ?)';
-    const { difficulty, title, detail, URL } = req.body;
-    const params = [difficulty, title, detail, URL];
+    sql = 'INSERT INTO CLASS(level, title, detail, URL) VALUES(?, ?, ?, ?)';
+    const { level, title, detail, URL } = req.body;
+    const params = [level, title, detail, URL];
     connection.query(sql, params, (err, rows, fields) =>{
-        res.json(rows);
+        res.send(rows);
     });
 });
     
@@ -136,9 +149,9 @@ app.post('/api/login', (req, res)=>{ // Login.jsx 로그인 시도 결과 요청
             return;
         }
         if (rows.length > 0) {
-            res.json({ id: rows[0].id });
+            res.send({ id: rows[0].id });
         } else {
-            res.json({ id: null }); 
+            res.send({ id: null }); 
         }    
     });
 });

@@ -11,17 +11,17 @@ import axios from 'axios';
 const ClassData = () => {
   const [data, setData] = useState(null); // 빈 배열이 아닌 null로 해야 Loading 컴포넌트 렌더링
   
-  let difficulty = ""; // CLASS 데이터 추가 시 사용
+  let level = ""; // CLASS 데이터 추가 시 사용
   let URL = ""; 
   let title = ""; 
   let detail = ""; 
 
   const handleSubmit = async e => { // CLASS 데이터 추가 시 사용
     e.preventDefault();
-    if (difficulty==="" || URL==="") {alert("필수 항목을 모두 입력해주세요."); return;}
+    if (level==="" || URL==="") {alert("필수 항목을 모두 입력해주세요."); return;}
     
     await axios.post('/api/postClassData', {
-      difficulty: difficulty,
+      level: level,
       title: title,
       detail: detail,
       URL: URL
@@ -59,9 +59,9 @@ const ClassData = () => {
             <TableHead>
               <TableRow>
                 <TableCell>primary key</TableCell>
-                <TableCell>난이도(1~3:초급~고급)</TableCell>
-                <TableCell>주제</TableCell>
-                <TableCell>내용</TableCell>
+                <TableCell>level(1~3:초급~고급)</TableCell>
+                <TableCell>title</TableCell>
+                <TableCell>detail</TableCell>
                 <TableCell>URL(학습 자료 영상 유튜브 URL id)</TableCell>
               </TableRow>
             </TableHead>
@@ -70,7 +70,7 @@ const ClassData = () => {
               {props.data.map(d=>(
                 <TableRow id = {d.id}>
                   <TableCell>{d.id}</TableCell>
-                  <TableCell>{d.difficulty}</TableCell>
+                  <TableCell>{d.level}</TableCell>
                   <TableCell>{d.title}</TableCell>
                   <TableCell>{d.detail}</TableCell>
                   <TableCell>{d.URL}</TableCell>
@@ -85,7 +85,7 @@ const ClassData = () => {
                   <input 
                     type="text"
                     placeholder='난이도'
-                    onChange={(e) => difficulty=(e.target.value)}
+                    onChange={(e) => level=(e.target.value)}
                   ></input>
                 </TableCell>
                 <TableCell>
