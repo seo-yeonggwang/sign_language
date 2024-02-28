@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import axios from 'axios';
+import BackGround from '../components/BackGround';
 
 function Mypage(props){
     const [userData, setUserData] = useState(null);
@@ -33,6 +34,7 @@ function Mypage(props){
     
     return (
         <>
+            <BackGround/>
             <h1>마이페이지</h1>
 
             {userData ? 
