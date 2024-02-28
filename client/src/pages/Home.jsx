@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import UserData from '../components/UserData';
 import ClassData from '../components/ClassData';
 
+import Background from '../components/BackGround';
+
 const Home = () => {
   return (
     <>
