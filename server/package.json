@@ -2,8 +2,8 @@
     "name": "sign-language",
     "version": "1.0.0",
     "scripts": {
-        "client": "cd client && npm install && npm start",
-        "server": "nodemon server.js",
+        "client": "cd ../client && npm install && npm start",
+        "server": "npm install && nodemon server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
     },
     "dependencies": {

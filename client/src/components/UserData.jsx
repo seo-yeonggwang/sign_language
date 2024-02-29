@@ -43,16 +43,16 @@ const UserData = () => {
   useEffect(() => {
     const fetchData = async () => {
       setTimeout(async () => { // Loagind 컴포넌트 확인용 딜레이
-      fetch('/api/getUserData')  //await?
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Network response error');
-        }
-        return res.json();
-      })
-      .then(body=>setData(body))
-      .catch(err=>console.error('Error fetching data:', err));
-      }, 2000); // 2초 딜레이
+        fetch('/api/getUserData')  //await?
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Network response error');
+          }
+          return res.json();
+        })
+        .then(body=>setData(body))
+        .catch(err=>console.error('Error fetching data:', err));
+    }, 2000); // 2초 딜레이
     };
     fetchData();
   }, []);

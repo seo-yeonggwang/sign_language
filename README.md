@@ -1,11 +1,12 @@
 # 실행 방법
 
-npm install
+cd server
+
 npm install -g yarn
 
 yarn dev
-
-# 리액트 css 디자인: Material-UI
+or
+npm run dev
 
 
 # alert() 2회 실행하는 이유
@@ -13,10 +14,9 @@ yarn dev
 index.js의 <React.StrictMode> 때문
 
 
-
 # HeidiSQL
 
-USE userDatabase;
+USE user;
 
 DROP TABLE LEARNING;
 DROP TABLE USER;
@@ -50,14 +50,7 @@ INSERT INTO CLASS (level, URL, title, detail) VALUES ('1', 'pQUWOFbL10g', "수�
 SELECT * FROM USER;
 
 
-# USER TABLE 구조 변경
-: server.js -> postUserData 수정
-: UserData.js 수정
 
+# 홈 화면에서 유튜브 URL 뒤의 id를 이용해서 임시로 강의 추가 가능
 
-
-# etc
-
-홈 화면에서 유튜브 URL 뒤의 id를 이용해서 임의로 강의 추가 가능
-
-추가한 강의는 로그인 후, 학습하기 페이지로 이동해서 조회 가능
+# 추가한 강의는 로그인 후 학습하기 페이지로 이동해서 조회 가능
