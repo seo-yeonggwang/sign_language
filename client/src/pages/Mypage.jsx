@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import axios from 'axios';
 
 function Mypage(props){
     const [userData, setUserData] = useState(null);
-    const [cookie, setCookie, removeCookie] = useCookies(['id']);
     const navigate = useNavigate();
 
     const secession = () => {
         const confirmSecession = window.confirm('정말 탈퇴하시겠습니까?');
         if (confirmSecession) {
-            removeCookie('id'); // 로그인 인증 삭제
-            axios.delete(`/api/secession/${cookie.id}`)
+            sessionStorage.removeItem('user_id') // 로그인 인증 삭제
+            axios.delete(`/api/secession/${sessionStorage.getItem('user_id')}`)
             .then(response=>{
                 alert('회원 탈퇴가 완료되었습니다.');
                 navigate('/');
@@ -24,7 +22,7 @@ function Mypage(props){
     };
     useEffect(()=>{
         const getUserData = async ()=>{
-          await axios.get(`/api/getUserData/1/?id=${cookie.id}`)
+          await axios.get(`/api/getUserData/1/?id=${sessionStorage.getItem('user_id')}`)
           .then(res=> setUserData(res.data))
           .catch(err=>console.error("Error: ", err));
         };

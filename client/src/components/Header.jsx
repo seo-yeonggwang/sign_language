@@ -1,22 +1,23 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import styled from 'styled-components';
 import Logo from '../images/Logo.png';
 import { mainColor, basicColor} from '../theme';
+import { useNavigate } from 'react-router-dom';
 
 function LoginButton(props){
-    const [cookies, setCookie, removeCookie] = useCookies(['id']);
+    const navigate = useNavigate();
 
     const Logout = () => {
-        removeCookie('id');
+        sessionStorage.removeItem('user_id');
+        navigate('/'); 
     };
 
-    if (cookies.id){ //logined
+    if (sessionStorage.getItem('user_id')){ //logined
         return(
             <>
             <Menu>
-                환영합니다! {cookies.id}님
+                환영합니다! {sessionStorage.getItem('user_id')}님
             </Menu>
             <Menu onClick={Logout}>
                 로그아웃

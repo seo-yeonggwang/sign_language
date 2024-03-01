@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function Login(){
     const navigate = useNavigate(); // history: 구버전
-    const [cookies, setCookie] = useCookies(['id']);
-    if (cookies.id){ // 로그인 후 페이지 접근시 홈으로
-        navigate('/');
-    }
 
     const [id, setId] = useState("");
     const [pswd, setPswd] = useState("");
@@ -25,7 +20,7 @@ function Login(){
         await axios.post(url, {id: id, pswd:pswd})
         .then(res=>{
             if(res.data.id){
-                setCookie('id', id);
+                sessionStorage.setItem('user_id', id);
                 navigate('/'); 
             }else{
                 alert("아이디와 비밀번호를 확인해주세요.");

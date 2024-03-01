@@ -11,7 +11,7 @@ import Mypage from "./pages/Mypage";
 import Search from './pages/Search';
 import { useCookies } from 'react-cookie';
 import { useState, useEffect } from "react";
-import PrivateRoute from './PrivateRoute';
+import RestrictedRoutes from './RestrictedRoutes';
 
 function App() {
   const [id, setId] = useState('');
@@ -29,15 +29,15 @@ function App() {
         <BrowserRouter>
           <Header />
           <Routes>
-            <Route exact path="/" element={<Home/>}></Route>
-            <Route path="/search/" element={<PrivateRoute authenticated={cookies.id} component={<Search />} />}></Route>
-            <Route path="/select-level/" element={<PrivateRoute authenticated={cookies.id} component={<SelectLevel />} />}></Route>
-            <Route path="/study/*" element={<PrivateRoute authenticated={cookies.id} component={<Study />} />}></Route>
-            <Route path="/select-chapter/*" element={<PrivateRoute authenticated={cookies.id} component={<SelectChapter />} />}></Route>
-            <Route path="/mypage/" element={<PrivateRoute authenticated={cookies.id} component={<Mypage />} />}></Route>
-            <Route path="/login/" element={<Login/>}></Route>
-            <Route path="/register/" element={<Register/>}></Route>
-            <Route path="/*" element={<NotFound/>}></Route>
+            <Route exact path="/" element={<Home/>}/>
+            <Route path="/search/" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')} component={<Search />} redirectPath="/login/"/>}/>
+            <Route path="/select-level/" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')} component={<SelectLevel />} redirectPath="/login/"/>}/>
+            <Route path="/study/*" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')} component={<Study />} redirectPath="/login/"/>}/>
+            <Route path="/select-chapter/*" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')} component={<SelectChapter />} redirectPath="/login/"/>}/>
+            <Route path="/mypage/" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')} component={<Mypage />} redirectPath="/login/" />}/>
+            <Route path="/login/" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')===null} component={<Login />} redirectPath="/" />}/>
+            <Route path="/register/" element={<RestrictedRoutes authenticated={sessionStorage.getItem('user_id')===null} component={<Register />} redirectPath="/" />}/>
+            <Route path="/*" element={<NotFound/>}/>
           </Routes>
         </BrowserRouter>
     </div>
