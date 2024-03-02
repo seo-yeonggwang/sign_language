@@ -4,29 +4,31 @@ import styled from 'styled-components';
 import Logo from '../images/Logo.png';
 import { mainColor, basicColor} from '../theme';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 function LoginButton(props){
     const navigate = useNavigate();
+    const [cookie, setCookie, removeCookie] = useCookies('id');
+    // const [tokenCookies, setTokenCookie, removeTokenCookie] = useCookies('token');
+    // const [isLoading, setIsLoading] = setState(false);
 
     const Logout = () => {
-        sessionStorage.removeItem('user_id');
+        removeCookie('id');
         navigate('/'); 
+        // window.location.reload(); //bad
     };
 
-    if (sessionStorage.getItem('user_id')){ //logined
-        return(
+    return (
+        cookie.id?(
             <>
             <Menu>
-                환영합니다! {sessionStorage.getItem('user_id')}님
+                환영합니다! {cookie.id}님
             </Menu>
-            <Menu onClick={Logout}>
+            <Menu onClick={Logout} style={{cursor:"pointer"}}>
                 로그아웃
             </Menu>
-            </>     
-        );
-    }
-    else{
-        return(
+            </>   
+        ):(
             <>
             <Menu>
                 <Link to="/register" style={{ textDecoration: "none"}}> 회원가입</Link>
@@ -35,12 +37,13 @@ function LoginButton(props){
                 <Link to="/login" style={{ textDecoration: "none"}}> 로그인</Link>
             </Menu>
             </>
-        );
-    }
+        )
+    );
 }
 
 function Toolbar(props){
     const location = useLocation();
+
     if (location.pathname === "/login" || location.pathname === "/register") return null;
     return (
         <>
@@ -69,16 +72,16 @@ function Toolbar(props){
 
 function Header(props) {
 
-  return (
-    <Container  className="Header">
-        <Link to="/" >
-            <img src={Logo}/>
-        </Link>
+    return (
+        <Container  className="Header">
+            <Link to="/" >
+                <img src={Logo} alt="logo_image"/>
+            </Link>
+            
+            <Toolbar/>
         
-        <Toolbar/>
-      
-    </Container>
-  );
+        </Container>
+    );
 }
 
 export default Header;

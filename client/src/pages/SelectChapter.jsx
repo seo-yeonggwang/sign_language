@@ -17,12 +17,12 @@ function SelectChapter() {
   
   useEffect(()=>{
     const getChapter = async ()=>{
-      await axios.get(`/api/getChapter/?level=${l_id}`)
+      await axios.get(`/api/get/chapter/?level=${l_id}`)
       .then(res=> setChapters(res.data))
       .catch(err=>console.error("Error: ", err));
     };
     getChapter();
-  }, []);
+  }, [l_id]);
 
   return (
     <>

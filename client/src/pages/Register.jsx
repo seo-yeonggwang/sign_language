@@ -2,51 +2,51 @@ import styled from 'styled-components';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useMutation } from 'react-query';
 
 function Register(){
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [availableId, setAvailableId] = useState(false);
-    if (sessionStorage.getItem('user_id')!==null){ // 로그인 후 페이지 접근시 홈으로
-        navigate('/');
-    }
-
     const [id, setId] = useState("");
     const [pswd, setPswd] = useState("");
     const [name, setName] = useState("");
+    const mutation = useMutation(data => axios.post('/api/post/userData', data)); // 회원가입용 useMutation
+    const [checkedId, setCheckedId] = useState("");
 
     const handleSubmit = async e => {
         e.preventDefault();
         if (id==="" || pswd==="" || name==="") {alert("필수 항목을 모두 입력해주세요."); return;}
-        if (availableId === false) {alert("아이디 중복 검사를 해주세요."); return;}
-        
-        await axios.post('/api/postUserData', {
-            id: id,
-            pswd: pswd,
-            name: name
-        })
-        .then(res=>{
+        if (availableId === false || id!==checkedId) {alert("아이디 중복 검사를 해주세요."); return;}
+        try{
+            await mutation.mutateAsync({id,pswd,name});
             alert('회원가입이 완료되었습니다.');
             navigate('/'); // 홈으로 이동
-        })
-        .catch(err=> console.error('Error: ', err));
+        }catch(err){
+            console.error('Error: ', err);
+        }
     };
 
     
-    const checkId = async ()=>{
-        if (id==="") {alert("아이디를 입력해주세요."); return;}
-        const url = '/api/checkId';
-        await axios.post(url, {id: id})
-        .then(res=>{
-            if(res.data.user_count===1){
-                alert("이미 존재하는 아이디 입니다.");
+    const checkId = async () => {
+        if (id==="") {
+            alert("아이디를 입력해주세요.");
+            return;
+        }
+        const url = '/api/post/checkId';
+        try {
+            const res = await axios.post(url, {id});
+            if (res.data.user_count === 1) {
+                alert("중복된 아이디 입니다.");
                 setAvailableId(false);
-            }else if (res.data.user_count===0){
+            } else if (res.data.user_count === 0) {
                 alert('사용 가능한 아이디 입니다.');
+                setCheckedId(id);
                 setAvailableId(true);
             }
-        })
-        .catch(err=>console.error('Error: ', err));
+        } catch (error) {
+            console.error('Error: ', error);
+        }
     };
 
     return(

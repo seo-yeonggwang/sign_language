@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import UserData from '../components/UserData';
 import ClassData from '../components/ClassData';
 

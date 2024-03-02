@@ -3,35 +3,40 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useMutation } from 'react-query';
+import { useCookies } from 'react-cookie'; 
 
 function Login(){
     const navigate = useNavigate(); // history: 구버전
-
     const [id, setId] = useState("");
     const [pswd, setPswd] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [, setCookie] = useCookies('id');
+
+    const mutation = useMutation(data => axios.post('/api/post/login', data)); // 로그인용 useMutation
     
     const handleSubmit = async e => {
         e.preventDefault(); // 새로고침 방지
 
         if (id==="" || pswd==="") {alert("아이디와 비밀번호를 입력해주세요."); return;}
-
-        const url = '/api/login';
-        await axios.post(url, {id: id, pswd:pswd})
-        .then(res=>{
-            if(res.data.id){
-                sessionStorage.setItem('user_id', id);
+        try {
+            const res = await mutation.mutateAsync({ id, pswd });
+            if(res.status === 204) alert("아이디와 비밀번호를 확인해주세요.");
+            else if (res.status !== 200) throw new Error('Network response error');
+            else if (res.data.id) {
+                // const time = 3600*1000; //1시간
+                // const expiration = new Date(Date.now() + time);
+                // setTokenCookie('token', res.data.token, expiration);
+                // setIdCookie('id', id, expiration);
+                setCookie(id);
                 navigate('/'); 
-            }else{
-                alert("아이디와 비밀번호를 확인해주세요.");
             }
-        })
-        .catch(err=>console.error('Error: ', err));
-        
-
+        } catch (error) {
+            console.error('Error: ', error);
+        }
     };
-    // // 로컬 스토리지 이용한 회원가입 데이터로 로그인
-    // const userDataString = localStorage.getItem(id);
+        // // 로컬 스토리지 이용한 회원가입 데이터로 로그인
+        // const userDataString = localStorage.getItem(id);
 
         // if (!userDataString) {
         //     alert("존재하지 않는 ID입니다.");
@@ -48,9 +53,6 @@ function Login(){
         //     alert("비밀번호를 확인해주세요.");
         // }
 
-
-    
-  
     return (
         <div>
             <div>로그인 페이지</div>
