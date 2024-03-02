@@ -7,24 +7,25 @@ import { useCookies } from 'react-cookie';
 function Mypage(props){
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
-    const [, , removeCookie] = useCookies('id');
+    const [cookie, , removeCookie] = useCookies('id');
     // axios.defaults.headers.common['Authorization'] = `Bearer ${cookies.token}`;
     
     const secession = () => {
         const confirmSecession = window.confirm('정말 탈퇴하시겠습니까?');
         if (confirmSecession) {
-            axios.delete(`/api/delete/secession/${sessionStorage.getItem('user_id')}`)
+            axios.delete(`/api/delete/secession/${cookie.id}`)
             .then(response=>{
                 alert('회원 탈퇴가 완료되었습니다.');
                 removeCookie('id');
                 navigate('/');
+                window.location.reload();
             })
             .catch(err=>console.error('Error: ', err));
         }
     };
     useEffect(()=>{
         const getUserData = async ()=>{
-            await axios.get(`/api/get/myData/?id=${sessionStorage.getItem('user_id')}`)
+            await axios.get(`/api/get/myData/?id=${cookie.id}`)
             .then(res=> setUserData(res.data))
             .catch(err=>console.error("Error: ", err));
         };

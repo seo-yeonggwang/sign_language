@@ -28,8 +28,9 @@ function Login(){
                 // const expiration = new Date(Date.now() + time);
                 // setTokenCookie('token', res.data.token, expiration);
                 // setIdCookie('id', id, expiration);
-                setCookie(id);
-                navigate('/'); 
+                setCookie('id', id);
+                navigate('/');
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error: ', error);
