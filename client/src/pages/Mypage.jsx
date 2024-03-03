@@ -18,7 +18,6 @@ function Mypage(props){
                 alert('회원 탈퇴가 완료되었습니다.');
                 removeCookie('id');
                 navigate('/');
-                window.location.reload();
             })
             .catch(err=>console.error('Error: ', err));
         }

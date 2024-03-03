@@ -30,7 +30,6 @@ function Login(){
                 // setIdCookie('id', id, expiration);
                 setCookie('id', id);
                 navigate('/');
-                window.location.reload();
             }
         } catch (error) {
             console.error('Error: ', error);

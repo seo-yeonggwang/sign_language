@@ -1,25 +1,25 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import styled from 'styled-components';
 import Logo from '../images/Logo.png';
 import { mainColor, basicColor} from '../theme';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 
 function LoginButton(props){
-    const navigate = useNavigate();
-    const [cookie, setCookie, removeCookie] = useCookies('id');
+    // const navigate = useNavigate();
+    const [cookie, , removeCookie] = useCookies(['id']);
     // const [tokenCookies, setTokenCookie, removeTokenCookie] = useCookies('token');
     // const [isLoading, setIsLoading] = setState(false);
 
     const Logout = () => {
         removeCookie('id');
-        navigate('/'); 
+        // navigate('/'); 
         // window.location.reload(); //bad
     };
 
-    return (
-        cookie.id?(
+    if (cookie.id){ //logined
+        return(
             <>
             <Menu>
                 환영합니다! {cookie.id}님
@@ -27,8 +27,11 @@ function LoginButton(props){
             <Menu onClick={Logout} style={{cursor:"pointer"}}>
                 로그아웃
             </Menu>
-            </>   
-        ):(
+            </>     
+        );
+    }
+    else{
+        return(
             <>
             <Menu>
                 <Link to="/register" style={{ textDecoration: "none"}}> 회원가입</Link>
@@ -37,8 +40,8 @@ function LoginButton(props){
                 <Link to="/login" style={{ textDecoration: "none"}}> 로그인</Link>
             </Menu>
             </>
-        )
-    );
+        );
+    }
 }
 
 function Toolbar(props){
