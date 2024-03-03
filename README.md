@@ -1,4 +1,4 @@
-# 실행 방법
+# 실행
 
 cd server
 
@@ -9,12 +9,8 @@ or
 npm run dev
 
 
-# alert() 2회 실행하는 이유
 
-index.js의 <React.StrictMode> 때문
-
-
-# HeidiSQL
+# SQL
 
 USE user;
 
@@ -48,9 +44,3 @@ CREATE TABLE LEARNING (
 INSERT INTO CLASS (level, URL, title, detail) VALUES ('1', 'pQUWOFbL10g', "수어 기초1", "수어 기초 테스트 영상입니다.");
 
 SELECT * FROM USER;
-
-
-
-# 홈 화면에서 유튜브 URL 뒤의 id를 이용해서 임시로 강의 추가 가능
-
-# 추가한 강의는 로그인 후 학습하기 페이지로 이동해서 조회 가능
