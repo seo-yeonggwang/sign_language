@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Loading from './Loading';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -7,9 +7,19 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import { TableBody } from '@mui/material';
 import axios from 'axios';
+import { useQuery } from 'react-query';
+
+const fetchData = async () => {
+  return axios.get('/api/get/classData')
+  .then(res=>{
+    if (res.status!==200) throw new Error('Networkresponse error');
+    return res.data;
+  })
+  .catch(err=>console.error('Error fetching data:', err));
+};
 
 const ClassData = () => {
-  const [data, setData] = useState(null); // 빈 배열이 아닌 null로 해야 Loading 컴포넌트 렌더링
+  const {data} = useQuery(["classData"], fetchData);
   
   let level = ""; // CLASS 데이터 추가 시 사용
   let URL = ""; 
@@ -20,7 +30,7 @@ const ClassData = () => {
     e.preventDefault();
     if (level==="" || URL==="") {alert("필수 항목을 모두 입력해주세요."); return;}
     
-    await axios.post('/api/postClassData', {
+    await axios.post('/api/post/classData', {
       level: level,
       title: title,
       detail: detail,
@@ -32,21 +42,8 @@ const ClassData = () => {
     .catch(err=> console.error('Error: ', err));
   };
 
-  const fetchData = async () => {
-    await fetch('/api/getClassData')
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Network response error');
-      }
-      return res.json();
-    })
-    .then(body=>setData(body))
-    .catch(err=>console.error('Error fetching data:', err));
-  };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+
   
   // DB CLASS TABLE 쉽게 확인하는 용도의 임시 컴포넌트
   function JsonTest(props){

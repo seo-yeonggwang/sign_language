@@ -4,21 +4,28 @@ import { useCookies } from 'react-cookie';
 import styled from 'styled-components';
 import Logo from '../images/Logo.png';
 import { mainColor, basicColor} from '../theme';
+import { useNavigate } from 'react-router-dom';
 
 function LoginButton(props){
-    const [cookies, setCookie, removeCookie] = useCookies(['id']);
+    // const navigate = useNavigate();
+    const [cookie, , removeCookie] = useCookies(['authToken', 'id']);
+    // const [tokenCookies, setTokenCookie, removeTokenCookie] = useCookies('token');
+    // const [isLoading, setIsLoading] = setState(false);
 
     const Logout = () => {
         removeCookie('id');
+        removeCookie('authToken');
+        window.location.reload(); //bad
+        // navigate('/'); 
     };
 
-    if (cookies.id){ //logined
+    if (cookie.authToken){ //logined
         return(
             <>
             <Menu>
-                환영합니다! {cookies.id}님
+                환영합니다! {cookie.id}님
             </Menu>
-            <Menu onClick={Logout}>
+            <Menu onClick={Logout} style={{cursor:"pointer"}}>
                 로그아웃
             </Menu>
             </>     
@@ -40,6 +47,7 @@ function LoginButton(props){
 
 function Toolbar(props){
     const location = useLocation();
+
     if (location.pathname === "/login" || location.pathname === "/register") return null;
     return (
         <>
@@ -68,16 +76,16 @@ function Toolbar(props){
 
 function Header(props) {
 
-  return (
-    <Container  className="Header">
-        <Link to="/" >
-            <img src={Logo}/>
-        </Link>
+    return (
+        <Container  className="Header">
+            <Link to="/" >
+                <img src={Logo} alt="logo_image"/>
+            </Link>
+            
+            <Toolbar/>
         
-        <Toolbar/>
-      
-    </Container>
-  );
+        </Container>
+    );
 }
 
 export default Header;
