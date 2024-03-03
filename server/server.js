@@ -2,7 +2,7 @@ const crypto = require('crypto'); // 암호화 모듈
 const fs = require('fs'); // 파일 접근 라이브러리
 const express = require('express');
 const bodyParser = require('body-parser');
-// const jwt = require('jsonwebtoken'); // JWT 모듈 추가
+const jwt = require('jsonwebtoken'); // JWT 모듈 추가
 const cors = require('cors'); // CORS 미들웨어
 const app = express();
 const port = 5000; // || process.env.PORT
@@ -35,29 +35,29 @@ connection.connect((err) => {
 });
 
 
-// const JWT_SECRET_KEY = 'secret_key';
+const JWT_SECRET_KEY = 'secret_key';
 
 // JWT 생성
-// function generateToken(id) {
-//     return jwt.sign({ id }, JWT_SECRET_KEY, { expiresIn: '1h' }); // 서명 1시간 유효
-// }
+function generateToken(id) {
+    return jwt.sign({ id }, JWT_SECRET_KEY, { expiresIn: '1h' }); // 서명 1시간 유효
+}
 // 해시 함수
 function hash(password) { 
     return crypto.createHash('sha512').update(password).digest('hex');
 }
 
 // 사용자 토큰 검증 미들웨어
-// function authenticateToken(req, res, next) {
-//     const authHeader = req.headers['Authorization'];
-//     const token = authHeader && authHeader.split(' ')[1];
-//     if (!token) return res.sendStatus(401); // Unauthorized
+function authenticateToken(req, res, next) {
+    const authHeader = req.get("Authorization");
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.sendStatus(401); // Unauthorized
 
-//     jwt.verify(token, JWT_SECRET_KEY, (err, user) => {
-//         if (err) return res.sendStatus(403); // Forbidden
-//         req.user = user;
-//         next();
-//     });
-// }
+    jwt.verify(token, JWT_SECRET_KEY, (err, user) => {
+        if (err) return res.sendStatus(403); // Forbidden
+        req.user = user;
+        next();
+    });
+}
 
 app.post('/api/post/login', (req, res)=>{ // Login.jsx 로그인 시도 결과 요청
     const id = req.body.id;
@@ -70,8 +70,8 @@ app.post('/api/post/login', (req, res)=>{ // Login.jsx 로그인 시도 결과 �
             return;
         }
         if (rows.length > 0) {
-            // const token = generateToken(id);
-            res.send({ id });
+            const token = generateToken(id);
+            res.send({ token });
         } else if (rows.length ===0){
             res.sendStatus(204);
         } else {
@@ -89,7 +89,7 @@ app.get('/api/get/userData', (req,res)=>{ // UserData.jsx   USER DB 확인용 �
         }
     );
 });
-app.get('/api/get/myData', (req,res)=>{ // Mypage.jsx   USER 개인정보 요청
+app.get('/api/get/myData', authenticateToken, (req,res)=>{ // Mypage.jsx   USER 개인정보 요청
     const query = 'SELECT * FROM USER' + ` WHERE id = "${req.query.id}"`;
     connection.query(
         query,
@@ -99,7 +99,7 @@ app.get('/api/get/myData', (req,res)=>{ // Mypage.jsx   USER 개인정보 요청
         }
     );
 });
-app.delete('/api/delete/secession/:id', (req, res) => { // Mypage.jsx 회원 탈퇴 요청
+app.delete('/api/delete/secession/:id', authenticateToken, (req, res) => { // Mypage.jsx 회원 탈퇴 요청
     const id = req.params.id; // 요청 URL에서 ID 가져옴
     const sql = "DELETE FROM USER WHERE id = ?";
     connection.query(sql, [id], (err, rows)=>{
@@ -116,7 +116,7 @@ app.get('/api/get/classData', (req,res)=>{ // ClassData.jsx  CLASS DB 확인용 
         }
     );
 });
-app.get('/api/get/chapter', (req,res)=>{  // SelectChapter.jsx CLASS level 데이터 요청
+app.get('/api/get/chapter', authenticateToken, (req,res)=>{  // SelectChapter.jsx CLASS level 데이터 요청
     // console.log(req.query.level);
     connection.query(
         "SELECT * FROM CLASS WHERE level = ?", [req.query.level],
@@ -126,7 +126,7 @@ app.get('/api/get/chapter', (req,res)=>{  // SelectChapter.jsx CLASS level 데�
         }
     );
 });
-app.get('/api/get/URL', (req,res)=>{  // Study.jsx 학습 영상 유튜브 URL id 요청
+app.get('/api/get/URL', authenticateToken, (req,res)=>{  // Study.jsx 학습 영상 유튜브 URL id 요청
     connection.query(
         "SELECT URL FROM CLASS WHERE id = ?", [req.query.class_id],
         (err, rows, fields) => {
@@ -141,7 +141,7 @@ app.post('/api/post/checkId', (req, res)=>{  // Register.jsx  아이디 중복 �
     const sql = "SELECT COUNT(*) AS user_count FROM USER WHERE id = ?";
     connection.query(sql, [id], (err, rows)=>{
         if(err){ return res.sendStatus(500); }
-        res.status(200).send({ user_count: rows[0].user_count });
+        res.status(201).send({ user_count: rows[0].user_count });
     });
 });
 

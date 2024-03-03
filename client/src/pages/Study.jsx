@@ -5,8 +5,11 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../components/Loading';
+import { useCookies } from 'react-cookie';
 
 function Study() {
+  const [cookie, , removeCookie] = useCookies(['authToken']);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${cookie.authToken}`;
   const [urlId, setUrlId] = useState(null);
   const location = useLocation();
   const c_id = location.pathname.split("/")[2];

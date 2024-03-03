@@ -8,12 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Loading from '../components/Loading';
 import axios from 'axios';
+import { useCookies } from 'react-cookie'; 
 
 
 function SelectChapter() {
   const [chapters, setChapters] = useState(null);
   const location = useLocation();
   const l_id = location.pathname.split("/")[2]; // 1 || 2 || 3
+  const [cookie, , removeCookie] = useCookies(['authToken']);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${cookie.authToken}`;
+
   
   useEffect(()=>{
     const getChapter = async ()=>{

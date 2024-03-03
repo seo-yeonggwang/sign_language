@@ -11,7 +11,7 @@ function Login(){
     const [id, setId] = useState("");
     const [pswd, setPswd] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [, setCookie] = useCookies('id');
+    const [, setCookie] = useCookies(['authToken', 'id']);
 
     const mutation = useMutation(data => axios.post('/api/post/login', data)); // 로그인용 useMutation
     
@@ -23,13 +23,13 @@ function Login(){
             const res = await mutation.mutateAsync({ id, pswd });
             if(res.status === 204) alert("아이디와 비밀번호를 확인해주세요.");
             else if (res.status !== 200) throw new Error('Network response error');
-            else if (res.data.id) {
-                // const time = 3600*1000; //1시간
-                // const expiration = new Date(Date.now() + time);
-                // setTokenCookie('token', res.data.token, expiration);
-                // setIdCookie('id', id, expiration);
-                setCookie('id', id);
+            else if (res.data.token) {
+                const time = 3600*1000; //1시간
+                const expiration = new Date(Date.now() + time);
+                setCookie('authToken', res.data.token, expiration);
+                setCookie('id', id, expiration);
                 navigate('/');
+                window.location.reload(); //bad
             }
         } catch (error) {
             console.error('Error: ', error);

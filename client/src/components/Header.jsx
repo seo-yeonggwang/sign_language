@@ -8,17 +8,18 @@ import { useNavigate } from 'react-router-dom';
 
 function LoginButton(props){
     // const navigate = useNavigate();
-    const [cookie, , removeCookie] = useCookies(['id']);
+    const [cookie, , removeCookie] = useCookies(['authToken', 'id']);
     // const [tokenCookies, setTokenCookie, removeTokenCookie] = useCookies('token');
     // const [isLoading, setIsLoading] = setState(false);
 
     const Logout = () => {
         removeCookie('id');
+        removeCookie('authToken');
+        window.location.reload(); //bad
         // navigate('/'); 
-        // window.location.reload(); //bad
     };
 
-    if (cookie.id){ //logined
+    if (cookie.authToken){ //logined
         return(
             <>
             <Menu>
