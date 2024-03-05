@@ -2,10 +2,6 @@
 
 cd server
 
-npm install -g yarn
-
-yarn dev
-or
 npm run dev
 
 
